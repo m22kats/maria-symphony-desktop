@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8em;
+}
+
+.container-item {
+    margin: 10px 0;
+    width: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    .container-item {
+        width: 100%;
+    }
+}
+
+.input-field {
+    width: 100%;
+}
+
+.main-btn {
+    width: 100%;
+}

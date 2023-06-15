@@ -1,0 +1,24 @@
+version: '2.17'
+services:
+  maria-symphony:
+    image: m22kats/maria:1.0
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb-server
+    networks:
+      - maria-net
+
+  mongodb-server:
+    image: mongo
+    restart: always
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - maria-net
+
+networks:
+  maria-net:
+
+volumes:
+  mongodb-data:
