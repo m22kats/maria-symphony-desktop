@@ -1,8 +1,8 @@
+import { put, call, takeLatest } from 'redux-saga/effects';
 import { Entity } from '@services/entity/entity.service.type';
 import { entityService } from '@services/entity/entity.service';
-import { entityActions } from './entity.slice';
 import { MariaResponse } from '@services/maria.type';
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { entityActions } from './entity.slice';
 import { FetchEntityActionType } from './entity.types';
 
 const { fetchEntityList, fetchEntityListSuccess, fetchEntityListFailure } =
