@@ -1,5 +1,5 @@
 import { Entity } from '@services/entity/entity.service.type';
-import { entityService } from '../../../services/entity/entity.service';
+import { entityService } from '@services/entity/entity.service';
 import { entityActions } from './entity.slice';
 import { MariaResponse } from '@services/maria.type';
 import { put, call, takeLatest } from 'redux-saga/effects';
