@@ -1,6 +1,8 @@
-import { Entity } from '@services/entity/entity.service.type';
+import {
+  Entity,
+  EntitySearchRequest,
+} from '@services/entity/entity.service.type';
 import { BaseActionType } from '@redux/action.type';
-import { EntitySearchRequest } from '@services/entity/entity.service.type';
 import { FetchStatusEnum } from '@services/fetch.type';
 
 export interface EntitySliceStateType {

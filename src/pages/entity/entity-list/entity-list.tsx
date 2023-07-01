@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { GenerateManyEntities } from './components/generate-many-entities';
 import { EntityFilter } from '@pages/entity/entity-list/components/filter';
 import { EntityTable } from '@pages/entity/entity-list/components/table';
 import TablePaginationComponent from '@shared/components/table-pagination';
@@ -9,8 +8,7 @@ import AlertDialog from '@shared/components/confirm-dialog';
 import SectionTitle from '@shared/components/section-title';
 import TotalCount from '@shared/components/total-count';
 import { DeleteButton } from '@shared/buttons/delete-btn';
-import { DataType } from '@shared/enums/app.enums';
-import { MelodyType } from '@shared/enums/app.enums';
+import { DataType, MelodyType } from '@shared/enums/app.enums';
 import { entityActions } from '@redux/slices/entity/entity.slice';
 import { entityDeleteActions } from '@redux/slices/entity/entity-delete/entity-delete.slice';
 import { entitySelector } from '@redux/slices/entity/entity.selector';
@@ -20,6 +18,8 @@ import { FetchStatusEnum } from '@services/fetch.type';
 import { Button, SelectChangeEvent } from '@mui/material';
 
 import styled from 'styled-components';
+import { GenerateManyEntities } from './components/generate-many-entities';
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -129,8 +129,8 @@ function EntityList() {
         organization: organization!,
         searchText: rhythmNote,
         code: keyName,
-        pageIndex: pageIndex,
-        pageSize: pageSize,
+        pageIndex,
+        pageSize,
       },
     });
     dispatch(fetchEntityAction);

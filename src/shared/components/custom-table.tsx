@@ -61,13 +61,11 @@ function CustomTable({ columns, data, prevCount, initialState }: TableProps) {
                 <TableCell>
                   {prevCount !== undefined ? index + prevCount + 1 : index + 1}
                 </TableCell>
-                {row.cells.map((cell) => {
-                  return (
-                    <TableCell {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </TableCell>
-                  );
-                })}
+                {row.cells.map((cell) => (
+                  <TableCell {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </TableCell>
+                ))}
               </TableRow>
             );
           })}

@@ -1,11 +1,11 @@
-import { Entity } from './entity.service.type';
-import { mariaClient } from '../maria-client';
-import { MariaResponse } from '../maria.type';
 import {
+  Entity,
   EntitySearchRequest,
   EntityCreateRequest,
   EntityDeleteRequest,
 } from './entity.service.type';
+import { mariaClient } from '../maria-client';
+import { MariaResponse } from '../maria.type';
 
 export const entityService = {
   search: async (
@@ -21,7 +21,7 @@ export const entityService = {
       dataType: request.dataType,
       organization: request.organization,
       searchText: request.searchText,
-      code: code,
+      code,
       pageIdx: request.pageIndex,
       size: request.pageSize,
     };

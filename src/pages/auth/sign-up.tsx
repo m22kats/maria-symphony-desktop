@@ -7,6 +7,7 @@ import { FetchStatusEnum } from '@services/fetch.type';
 import { signUpActions } from '@redux/slices/auth/sign-up/sign-up.slice';
 import { signUpSelector } from '@redux/slices/auth/sign-up/sign-up.selector';
 import '@styles/auth.css';
+
 const StyledLink = styled(Link)`
   && {
     color: var(--primary--color);

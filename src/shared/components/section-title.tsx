@@ -13,8 +13,8 @@ interface SectionTitleProps {
   title: string;
 }
 
-const SectionTitle = ({ title }: SectionTitleProps) => {
-  return <Container>{title}</Container>;
-};
+const SectionTitle = ({ title }: SectionTitleProps) => (
+  <Container>{title}</Container>
+);
 
 export default SectionTitle;

@@ -1,5 +1,4 @@
-import { DataType } from '@src/shared/enums/app.enums';
-import { MelodyType } from '@src/shared/enums/app.enums';
+import { DataType, MelodyType } from '@src/shared/enums/app.enums';
 
 export class Entity {
   melodyId: string = '';

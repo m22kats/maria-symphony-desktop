@@ -11,8 +11,8 @@ interface TotalCountProps {
   count: number;
 }
 
-const TotalCount = ({ count }: TotalCountProps) => {
-  return <Container>Total Count: {count}</Container>;
-};
+const TotalCount = ({ count }: TotalCountProps) => (
+  <Container>Total Count: {count}</Container>
+);
 
 export default TotalCount;

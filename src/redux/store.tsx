@@ -5,15 +5,12 @@ import {
   Middleware as ReduxMiddleware,
 } from '@reduxjs/toolkit';
 
-import { rootSaga, rootSagaMiddleware } from './root.saga';
-
 import { SagaMiddleware } from 'redux-saga';
-import { loggerMiddleware } from './middlewares/logger.middlewear';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { routerMiddleware } from 'connected-react-router';
-import history from '@src/routes/history';
+import { loggerMiddleware } from './middlewares/logger.middlewear';
+import { rootSaga, rootSagaMiddleware } from './root.saga';
 
 const persistConfig = {
   key: 'root',
@@ -26,12 +23,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleware: Array<SagaMiddleware | ReduxMiddleware> = [
   rootSagaMiddleware,
   loggerMiddleware,
-  routerMiddleware(history),
 ];
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: middleware,
+  middleware,
 });
 
 rootSagaMiddleware.run(rootSaga);

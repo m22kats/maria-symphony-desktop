@@ -17,10 +17,8 @@ interface DeleteButtonProps {
   onClick?: () => void;
 }
 
-export const DeleteButton = ({ text, onClick }: DeleteButtonProps) => {
-  return (
-    <Container>
-      <StyledButton onClick={onClick}>Delete {text}</StyledButton>
-    </Container>
-  );
-};
+export const DeleteButton = ({ text, onClick }: DeleteButtonProps) => (
+  <Container>
+    <StyledButton onClick={onClick}>Delete {text}</StyledButton>
+  </Container>
+);

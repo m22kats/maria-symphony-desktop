@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FetchStatusEnum } from '@services/fetch.type';
 import {
   EntitySliceStateType,
   FetchEntityActionType,
   FetchEntitySuccessActionType,
 } from './entity.types';
-import { FetchStatusEnum } from '@services/fetch.type';
 
 const initialState: EntitySliceStateType = {
   data: [],
@@ -15,7 +15,7 @@ const initialState: EntitySliceStateType = {
 
 const entitySlice = createSlice({
   name: 'entity',
-  initialState: initialState,
+  initialState,
   reducers: {
     resetAllState: () => initialState,
     fetchEntityList: (state, _action: FetchEntityActionType) => {

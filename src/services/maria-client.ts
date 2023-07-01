@@ -18,15 +18,13 @@ mariaClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (config?.headers) {
     const state = store.getState() as StoreStateType;
     const token = state.signIn?.user?.token;
-    config.headers['Authorization'] = `Bearer ${token}` || '';
+    config.headers.Authorization = `Bearer ${token}` || '';
   }
   return config;
 });
 
 mariaClient.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
+  (response: AxiosResponse) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
       store.dispatch(signInActions.signOut());

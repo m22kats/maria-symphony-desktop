@@ -10,17 +10,18 @@ import {
   PathCreateRequest,
   AttributeCreateRequest,
 } from '@services/entity/entity.service.type';
-import { FormComponent } from './components/form';
-import {
-  DesktopStepperComponent,
-  DesktopStepperBtnComponent,
-  MobileStepperComponent,
-} from './components/stepper';
 import { MelodyType } from '@shared/enums/app.enums';
 import { RHYTHM_CODE_REGEX } from '@shared/constants/app.constants';
 
 import { useTheme, useMediaQuery } from '@mui/material';
 import styled from 'styled-components';
+import {
+  DesktopStepperComponent,
+  DesktopStepperBtnComponent,
+  MobileStepperComponent,
+} from './components/stepper';
+import { FormComponent } from './components/form';
+
 const Container = styled.div`
   margin-top: 3em;
 `;
@@ -136,7 +137,7 @@ function EntityCreate() {
 
   const handleNext = () => {
     if (activeStep === 0 && !validateStep1()) return;
-    else if (activeStep === 1 && !validateStep2()) return;
+    if (activeStep === 1 && !validateStep2()) return;
 
     if (activeStep === steps.length - 1) return;
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -149,12 +150,12 @@ function EntityCreate() {
     switch (formData.type) {
       case MelodyType.TUNE:
         entityCreate.type = 'TUNE';
-        entityCreate.melodyId = '/A/' + formData.rhythmNote;
+        entityCreate.melodyId = `/A/${formData.rhythmNote}`;
         break;
 
       case MelodyType.NOTE:
         entityCreate.type = 'NOTE';
-        entityCreate.melodyId = '/B/' + formData.rhythmNote;
+        entityCreate.melodyId = `/B/${formData.rhythmNote}`;
         break;
     }
 

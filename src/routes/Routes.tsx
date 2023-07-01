@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import ProtectedRoutes from './protected-routes';
 import EntityList from '@pages/entity/entity-list/entity-list';
 import EntityCreate from '@pages/entity/entity-create/entity-create';
 import SignIn from '@pages/auth/sign-in';
@@ -7,6 +6,7 @@ import SignUp from '@pages/auth/sign-up';
 import { useSelector } from 'react-redux';
 import { signInSelector } from '@redux/slices/auth/sign-in/sign-in.selector';
 import NavigationBar from '@shared/layout/navigation-bar';
+import ProtectedRoutes from './protected-routes';
 
 function RouteList() {
   const isSignIn = useSelector(signInSelector.isSignIn);

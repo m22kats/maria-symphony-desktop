@@ -17,10 +17,8 @@ interface CreateButtonProps {
   onClick?: () => void;
 }
 
-export const CreateButton = ({ text, onClick }: CreateButtonProps) => {
-  return (
-    <Container>
-      <StyledButton onClick={onClick}>Create {text}</StyledButton>
-    </Container>
-  );
-};
+export const CreateButton = ({ text, onClick }: CreateButtonProps) => (
+  <Container>
+    <StyledButton onClick={onClick}>Create {text}</StyledButton>
+  </Container>
+);
