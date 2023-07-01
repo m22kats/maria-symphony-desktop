@@ -7,6 +7,7 @@ const authController = require('./controllers/authController');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const ROOT_END_POINT = process.env.ROOT_END_POINT;
 
 // Parse JSON request bodies
 app.use(bodyParser.json());
@@ -15,8 +16,6 @@ app.get('/', (req, res) => {
   res.send(`Maria Symphony API running on port ${port}`);
 });
 
-ROOT_END_POINT = process.env.ROOT_END_POINT;
-
 // Auth Endpoints
 app.post('/musicians/signin', authController.login);
 app.post('/musicians/signup', authController.signUp);
@@ -24,6 +23,8 @@ app.post('/musicians/signup', authController.signUp);
 // Entities Endpoints
 app.get(`${ROOT_END_POINT}/entities`, dataController.getAllEntities);
 app.get(`${ROOT_END_POINT}/entities/page`, dataController.searchEntities);
+app.post(`${ROOT_END_POINT}/entities`, dataController.createEntity);
+app.post(`${ROOT_END_POINT}/entities/delete`, dataController.deleteEntities);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

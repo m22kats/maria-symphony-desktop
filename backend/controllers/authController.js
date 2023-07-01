@@ -2,12 +2,16 @@ const { MongoClient } = require('mongodb');
 
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
 
+const connectToDatabase = async () => {
+  const client = await MongoClient.connect(url);
+  return client.db();
+};
+
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const client = await MongoClient.connect(url);
-    const db = client.db();
+    const db = await connectToDatabase();
     const collection = db.collection('musicians');
 
     const user = await collection.findOne({ _id: username, password });
@@ -26,7 +30,6 @@ exports.login = async (req, res) => {
       token,
     };
 
-    client.close();
     res.json(signInResponse);
   } catch (err) {
     console.error('Error retrieving data from MongoDB:', err);
@@ -38,8 +41,7 @@ exports.signUp = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const client = await MongoClient.connect(url);
-    const db = client.db();
+    const db = await connectToDatabase();
     const collection = db.collection('musicians');
 
     const existingUser = await collection.findOne({ _id: username });
@@ -58,7 +60,6 @@ exports.signUp = async (req, res) => {
       username: newUser._id,
     };
 
-    client.close();
     res.status(201).json(signUpResponse);
   } catch (err) {
     console.error('Error creating user:', err);
