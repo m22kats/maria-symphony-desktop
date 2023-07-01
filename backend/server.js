@@ -1,14 +1,20 @@
 require('dotenv').config({ path: './config/.env' });
 
 const express = require('express');
+var cors = require('cors');
 const bodyParser = require('body-parser');
 const dataController = require('./controllers/dataController');
 const authController = require('./controllers/authController');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const ROOT_END_POINT = process.env.ROOT_END_POINT;
 
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+  })
+);
 // Parse JSON request bodies
 app.use(bodyParser.json());
 

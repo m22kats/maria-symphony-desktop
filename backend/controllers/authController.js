@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { MariaResponse } = require('./response/MariaResponse');
 
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
 
@@ -16,7 +17,15 @@ exports.login = async (req, res) => {
 
     const user = await collection.findOne({ _id: username, password });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      const response = {
+        status: {
+          code: 'fail',
+          message: 'User not found',
+        },
+      };
+      const mariaResponse = new MariaResponse();
+      mariaResponse.status = response.status;
+      return res.status(404).json(mariaResponse);
     }
 
     // Omit the password from the returned user object
@@ -30,10 +39,31 @@ exports.login = async (req, res) => {
       token,
     };
 
-    res.json(signInResponse);
+    const response = {
+      data: {
+        items: [signInResponse],
+      },
+      status: {
+        code: 'success',
+      },
+    };
+
+    const mariaResponse = new MariaResponse();
+    mariaResponse.data = response.data;
+    mariaResponse.status = response.status;
+
+    res.json(mariaResponse);
   } catch (err) {
     console.error('Error retrieving data from MongoDB:', err);
-    res.status(500).send('Error retrieving data from database');
+    const response = {
+      status: {
+        code: 'fail',
+        message: 'Error retrieving data from database',
+      },
+    };
+    const mariaResponse = new MariaResponse();
+    mariaResponse.status = response.status;
+    res.status(500).json(mariaResponse);
   }
 };
 
@@ -46,7 +76,12 @@ exports.signUp = async (req, res) => {
 
     const existingUser = await collection.findOne({ _id: username });
     if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
+      return res.status(409).json({
+        status: {
+          code: 'fail',
+          message: 'User already exists',
+        },
+      });
     }
 
     const newUser = {
@@ -60,9 +95,23 @@ exports.signUp = async (req, res) => {
       username: newUser._id,
     };
 
-    res.status(201).json(signUpResponse);
+    const response = {
+      data: {
+        items: [signUpResponse],
+      },
+      status: {
+        code: 'success',
+      },
+    };
+
+    res.status(201).json(response);
   } catch (err) {
     console.error('Error creating user:', err);
-    res.status(500).json({ message: 'Failed to create user' });
+    res.status(500).json({
+      status: {
+        code: 'fail',
+        message: 'Failed to create user',
+      },
+    });
   }
 };

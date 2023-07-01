@@ -1,0 +1,10 @@
+version: '2.17'
+services:
+  mongodb-server:
+    image: mongo
+    restart: always
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
