@@ -119,3 +119,28 @@ exports.signUp = async (req, res) => {
     });
   }
 };
+
+exports.logout = async (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+
+  try {
+    const dataDir = './data';
+    const files = fs.readdirSync(dataDir);
+
+    files.forEach((file) => {
+      const filePath = path.join(dataDir, file);
+      fs.unlinkSync(filePath);
+    });
+
+    const response = {
+      status: {
+        code: 'success',
+      },
+    };
+    res.json(response);
+  } catch (error) {
+    console.error('Error deleting files:', error);
+    res.status(500).json({ error: 'An error occurred during logout' });
+  }
+};

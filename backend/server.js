@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 // Auth Endpoints
 app.post('/musicians/signin', authController.login);
 app.post('/musicians/signup', authController.signUp);
+app.get('/musicians/signout', authController.logout);
 
 // Entities Endpoints
 app.get(`${ROOT_END_POINT}/entities`, dataController.getAllEntities);
