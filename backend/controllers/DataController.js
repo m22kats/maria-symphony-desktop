@@ -45,11 +45,17 @@ exports.searchEntities = async (req, res) => {
       .limit(parseInt(size))
       .toArray();
 
+    // Rename _id to melodyId in each entity
+    const modifiedResult = result.map((entity) => {
+      const { _id: melodyId, ...rest } = entity;
+      return { melodyId, ...rest };
+    });
+
     const totalItems = await collection.countDocuments(query);
     const totalPages = Math.ceil(totalItems / parseInt(size));
 
     const response = new MariaResponse();
-    response.data.items = result;
+    response.data.items = modifiedResult;
     response.data.page = new MariaDataPageResponse();
     response.data.page.total = totalItems;
     response.data.page.hasNext = parseInt(pageIdx) < totalPages - 1;
