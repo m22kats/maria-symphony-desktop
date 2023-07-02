@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { MariaResponse } = require('./response/MariaResponse');
+const storage = require('../data/app-data.js');
 
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
 
@@ -30,6 +31,7 @@ exports.login = async (req, res) => {
 
     // Omit the password from the returned user object
     const { password: userPassword, ...userData } = user;
+    storage.setItemSync('organization', user.organization);
 
     // Generate a token
     const token = 'implement later';
@@ -69,7 +71,7 @@ exports.login = async (req, res) => {
 
 exports.signUp = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, organization } = req.body;
 
     const db = await connectToDatabase();
     const collection = db.collection('musicians');
@@ -87,12 +89,14 @@ exports.signUp = async (req, res) => {
     const newUser = {
       _id: username,
       password,
+      organization,
     };
 
     await collection.insertOne(newUser);
 
     const signUpResponse = {
       username: newUser._id,
+      organization,
     };
 
     const response = {
