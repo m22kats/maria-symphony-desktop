@@ -1,9 +1,9 @@
+const storage = require('node-persist');
 const { MongoClient } = require('mongodb');
 const {
   MariaResponse,
   MariaDataPageResponse,
 } = require('./response/MariaResponse');
-const storage = require('../data/app-data.js');
 
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
 
@@ -32,7 +32,7 @@ exports.searchEntities = async (req, res) => {
     const collection = db.collection('entities');
 
     const query = {
-      organization: storage.data.organization,
+      organization: await storage.getItem('organization'),
       ...(searchText
         ? { rhythmNote: { $regex: `.*${searchText}.*`, $options: 'i' } }
         : {}),
@@ -90,7 +90,7 @@ exports.createEntity = async (req, res) => {
       _id: melodyId,
       type,
       rhythmNote: melodyId.split('/')[2],
-      organization: storage.data.organization,
+      organization: await storage.getItem('organization'),
       title,
       isActive,
       createTime: currentTime,

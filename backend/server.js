@@ -6,6 +6,11 @@ const bodyParser = require('body-parser');
 const dataController = require('./controllers/DataController');
 const authController = require('./controllers/AuthController');
 
+const storage = require('node-persist');
+storage.init({
+  dir: './data',
+});
+
 const app = express();
 const port = process.env.PORT || 8080;
 const ROOT_END_POINT = process.env.ROOT_END_POINT;

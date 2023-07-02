@@ -1,6 +1,6 @@
+const storage = require('node-persist');
 const { MongoClient } = require('mongodb');
 const { MariaResponse } = require('./response/MariaResponse');
-const storage = require('../data/app-data.js');
 
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
 
@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 
     // Omit the password from the returned user object
     const { password: userPassword, ...userData } = user;
-    storage.setItemSync('organization', user.organization);
+    await storage.setItem('organization', user.organization);
 
     // Generate a token
     const token = 'implement later';
