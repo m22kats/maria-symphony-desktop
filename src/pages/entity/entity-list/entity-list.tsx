@@ -16,6 +16,8 @@ import { entityDeleteActions } from '@redux/slices/entity/entity-delete/entity-d
 import { entitySelector } from '@redux/slices/entity/entity.selector';
 import { entityDeleteSelector } from '@redux/slices/entity/entity-delete/entity-delete.selector';
 import { signInSelector } from '@redux/slices/auth/sign-in/sign-in.selector';
+import { pageSizeSelector } from '@redux/slices/entity/page-size/page-size.selector';
+import { changePageSize } from '@redux/slices/entity/page-size/page-size.slice';
 import { FetchStatusEnum } from '@services/fetch.type';
 import { Button, SelectChangeEvent } from '@mui/material';
 
@@ -66,6 +68,7 @@ function EntityList() {
     entityDeleteSelector.entityDeleteFetchStatus
   );
   const organization = useSelector(signInSelector.user)?.organization;
+  const currentPageSize = useSelector(pageSizeSelector.pageSize);
 
   const [currentEntityList, setCurrentEntityList] =
     useState(entityListDataSource);
@@ -74,7 +77,7 @@ function EntityList() {
   const [keyName, setKeyName] = useState([...keys]);
   const [rhythmNote, setRhythmNote] = useState('');
   const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(currentPageSize);
   const [prevPageCount, setPrevPageCount] = useState(0);
 
   useEffect(() => {
@@ -109,6 +112,7 @@ function EntityList() {
   const handleChangeRowsPerPage = (rowsPerPage: number) => {
     setPageIndex(0);
     setPrevPageCount(0);
+    dispatch(changePageSize(rowsPerPage));
     setPageSize(rowsPerPage);
   };
 

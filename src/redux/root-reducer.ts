@@ -6,6 +6,7 @@ import { entityCreateReducer } from './slices/entity/entity-create/entity-create
 import { connectRouter } from 'connected-react-router';
 import history from '@src/routes/history';
 import { entityDeleteReducer } from './slices/entity/entity-delete/entity-delete.slice';
+import { pageSizeReducer } from './slices/entity/page-size/page-size.slice';
 
 const rootReducer = combineReducers({
   signIn: signInReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   entityCreate: entityCreateReducer,
   entityDelete: entityDeleteReducer,
   router: connectRouter(history),
+  pageSize: pageSizeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
