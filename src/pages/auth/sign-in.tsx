@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signInActions } from '@src/redux/slices/auth/sign-in/sign-in.slice';
+import { signInActions } from '@redux/slices/auth/sign-in/sign-in.slice';
 import styled from 'styled-components';
 import { Button, TextField } from '@mui/material';
 import '@styles/auth.css';

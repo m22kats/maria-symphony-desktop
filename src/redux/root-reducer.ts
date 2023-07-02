@@ -4,6 +4,7 @@ import { entityReducer } from './slices/entity/entity.slice';
 import { signUpReducer } from './slices/auth/sign-up/sign-up.slice';
 import { entityCreateReducer } from './slices/entity/entity-create/entity-create.slice';
 import { entityDeleteReducer } from './slices/entity/entity-delete/entity-delete.slice';
+import { pageSizeReducer } from './slices/entity/page-size/page-size.slice';
 
 const rootReducer = combineReducers({
   signIn: signInReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   signUp: signUpReducer,
   entityCreate: entityCreateReducer,
   entityDelete: entityDeleteReducer,
+  pageSize: pageSizeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

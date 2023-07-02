@@ -27,7 +27,7 @@ export class EntitySearchRequest {
   searchText: string = '';
   code: Array<string> = [MelodyType.TUNE, MelodyType.NOTE];
   pageIndex: number = 0;
-  pageSize: number = 20;
+  pageSize: number = 10;
 }
 
 // export class EntryDetailSearchRequest {
