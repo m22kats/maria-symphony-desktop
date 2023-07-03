@@ -1,22 +1,25 @@
 const storage = require('node-persist');
-const { MongoClient } = require('mongodb');
 const {
   MariaResponse,
   MariaDataPageResponse,
 } = require('./response/MariaResponse');
 
+const mongoose = require('mongoose');
 const url = `mongodb://localhost:${process.env.MONGODB_SERVER_PORT}/Symphony`;
+const Entity = require('../schema/entity');
 
-const connectToDatabase = async () => {
-  const client = await MongoClient.connect(url);
-  return client.db();
-};
+mongoose
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 exports.getAllEntities = async (req, res) => {
   try {
-    const db = await connectToDatabase();
-    const collection = db.collection('entities');
-    const result = await collection.find({}).toArray();
+    const result = await Entity.find();
     res.json(result);
   } catch (err) {
     console.error('Error retrieving data from MongoDB:', err);
@@ -28,9 +31,6 @@ exports.searchEntities = async (req, res) => {
   try {
     const { searchText, code, pageIdx, size } = req.query;
 
-    const db = await connectToDatabase();
-    const collection = db.collection('entities');
-
     const query = {
       organization: await storage.getItem('organization'),
       ...(searchText
@@ -39,19 +39,17 @@ exports.searchEntities = async (req, res) => {
       type: { $in: code.split(',') },
     };
 
-    const result = await collection
-      .find(query)
+    const result = await Entity.find(query)
       .skip(parseInt(pageIdx) * parseInt(size))
-      .limit(parseInt(size))
-      .toArray();
+      .limit(parseInt(size));
 
     // Rename _id to melodyId in each entity
     const modifiedResult = result.map((entity) => {
-      const { _id: melodyId, ...rest } = entity;
+      const { _id: melodyId, ...rest } = entity.toObject();
       return { melodyId, ...rest };
     });
 
-    const totalItems = await collection.countDocuments(query);
+    const totalItems = await Entity.countDocuments(query);
     const totalPages = Math.ceil(totalItems / parseInt(size));
 
     const response = new MariaResponse();
@@ -82,11 +80,7 @@ exports.createEntity = async (req, res) => {
 
     const currentTime = new Date();
 
-    const client = await MongoClient.connect(url);
-    const db = client.db();
-    const collection = db.collection('entities');
-
-    const newEntity = {
+    const newEntity = new Entity({
       _id: melodyId,
       type,
       rhythmNote: melodyId.split('/')[2],
@@ -96,11 +90,9 @@ exports.createEntity = async (req, res) => {
       createTime: currentTime,
       updateTime: currentTime,
       attributes,
-    };
+    });
 
-    await collection.insertOne(newEntity);
-
-    client.close();
+    await newEntity.save();
 
     const response = new MariaResponse();
     response.status.code = 'success';
@@ -122,14 +114,11 @@ exports.deleteEntities = async (req, res) => {
   try {
     const { melodyIds } = req.body;
 
-    const db = await connectToDatabase();
-    const collection = db.collection('entities');
-
-    const result = await collection.deleteMany({ _id: { $in: melodyIds } });
+    const result = await Entity.deleteMany({ _id: { $in: melodyIds } });
 
     const response = new MariaResponse();
     response.status.code = 'success';
-    response.status.message = `${result.deletedCount} deleted successfully`;
+    response.status.message = `${result.deletedCount} entities deleted successfully`;
 
     res.json(response);
   } catch (err) {

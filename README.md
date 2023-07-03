@@ -41,3 +41,24 @@ npm run dev
    - Protected router to restrict access to certain routes
    - Modest responsive views (UI wasn't a priority in this project)
    - Prettier auto-fix setup for code formatting (use `npm run format` to format the code).
+
+
+## 07.03.23 Update: Node Backend Added
+To demonstrate my ability to set up a Node.js project with MongoDB, a backend folder has been included in the project. You can run the frontend using Node.js instead of the Java backend mentioned earlier with the following steps:
+
+1. Navigate to the backend folder.
+```
+cd backend
+```
+
+2. Start the Docker containers using the following command:
+```
+docker-compose up -d
+```
+
+3. Start the Node.js backend by executing the following command:
+```
+npm start
+```
+
+Refer to the README.md file in the backend folder for further instructions.

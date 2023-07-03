@@ -40,3 +40,23 @@ npm run dev
    - 특정 경로에 대한 액세스를 제한하는 protected router
    - 적당한 반응형 화면 (UI를 우선순위에 둔 프로젝트는 아님)
    - Prettier 코드 자동 수정 설정 (use `npm run format` to format the code)
+
+
+## 2023.07.03 업데이트: 노드 백엔드 추가
+MongoDB로 Node.js 프로젝트를 설정하는 기본 스킬을 보여주기 위해 백엔드 폴더가 프로젝트에 추가되었습니다. 앞에서 언급한 Java 백엔드 대신 Node.js를 사용하여 프론트엔드를 실행할 수 있습니다:
+
+1. backend 폴더로 이동
+```
+cd backend
+```
+
+2. Docker 컨테이너 시작 (MongoDB)
+```
+docker-compose up -d
+```
+
+3. 백엔드 시작 (Node.js):
+```
+npm start
+```
+backend 폴더의 README.md 파일을 참조하세요.
